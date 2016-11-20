@@ -18,6 +18,10 @@ public class SQL {
 		query = queryInput;
 	}
 	
+	public static void main(String args[]){
+		
+	}
+	
 	public static int isFileAvailable(){
 		
 		Connection con = null;
