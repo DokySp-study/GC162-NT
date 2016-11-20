@@ -1,10 +1,14 @@
 package index;
 
 public class ServerHandler {
-
+	
+	public static void main(String args[]){
+		
+		
+	}
+	
 }
 
-//
 //import java.io.DataInputStream;
 //import java.io.File;
 //import java.io.FileOutputStream;

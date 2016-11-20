@@ -12,16 +12,13 @@ import java.sql.SQLException;
 
 public class SQL {
 	
-	public SQL(String query){
-		
+	private static String query = null;
+	
+	public SQL(String queryInput){
+		query = queryInput;
 	}
 	
 	public static int isFileAvailable(){
-		
-		return 0;
-	}
-	
-	public static void main(String args[]){
 		
 		Connection con = null;
 		
@@ -32,13 +29,13 @@ public class SQL {
 			java.sql.Statement st = null;
 			ResultSet rs = null;
 			st = con.createStatement();
-			rs = st.executeQuery("use fmdb"); //null;
-			
-//			if(st.execute("show databases"))
-//				rs = st.getResultSet();
-			
-			rs = st.executeQuery("show tables");
-			rs = st.executeQuery("select * from currfilelist");
+//			rs = st.executeQuery("use fmdb"); //null;
+//			
+////			if(st.execute("show databases"))
+////				rs = st.getResultSet();
+//			
+//			rs = st.executeQuery("show tables");
+			rs = st.executeQuery(query);
 			
 			while(rs.next()){
 				String str = rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4);
@@ -51,6 +48,8 @@ public class SQL {
 			System.out.println(e.getSQLState());
 		}
 		
+		
+		return 0;
 	}
 	
 }
