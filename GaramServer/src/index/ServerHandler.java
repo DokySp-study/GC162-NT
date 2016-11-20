@@ -4,6 +4,7 @@ public class ServerHandler {
 	
 	public static void main(String args[]){
 		
+		System.out.println("");
 		
 	}
 	
@@ -46,10 +47,10 @@ public class ServerHandler {
 //				
 //				for(;data > 0; data--){
 //					len = in.read(buffer);
-//					out.write(buffer, 0, len); //½ÃÀÛÁ¡ , ÀÐÀ» Å©±â  
+//					out.write(buffer, 0, len); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ , ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½  
 //				}
 //				
-//				System.out.print("¾à " + dataLen + "kb Àü¼ÛµÊ: " + socket);
+//				System.out.print("ï¿½ï¿½ " + dataLen + "kb ï¿½ï¿½ï¿½Ûµï¿½: " + socket);
 //				
 //				out.flush();
 //				out.close();
