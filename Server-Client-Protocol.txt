@@ -1,0 +1,15 @@
+
+//Project Garam
+//Server-Client abstract Protocol
+
+1   Server         |  Client
+2   
+3   Mysql request
+4   ->ACK             TransFile: 7
+5   ->NAK             FileDownload()
+6
+7   FileTrans()       ->ACK
+8                     ->NAK: ErrMsg
+9                  
+10  ->ACK             FileTrans()
+11  ->NAK

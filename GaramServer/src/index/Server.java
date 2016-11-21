@@ -6,7 +6,6 @@ package index;
 
 import java.net.*;
 import java.io.*;
-import functions.SQL;
 
 public class Server {
 	
@@ -14,13 +13,10 @@ public class Server {
 	
 	public static void main (String args[]){
 		
-		SQL sample = new SQL("mydb");
-		
-		System.out.println(sample.isFileAvailable("select course_id from course where course_id = 'EE'"));
-		System.out.println(sample.isFileAvailable("select course_id from course where course_id like 'CS%'"));
-		System.out.println(sample.getResult("select course_id from course"));
-		
 		try{
+			
+			//This field is main-stream function of Server class.			
+			
 			echo = new ServerSocket(3456);
 			System.out.println("Echo server running");
 			
