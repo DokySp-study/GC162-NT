@@ -14,7 +14,6 @@ public class SQL {
 	
 	private String query = null;
 	private String currDB = null;
-	private short returnValue = 0;
 	private java.sql.Statement st = null;
 	private ResultSet rs = null;
 	
