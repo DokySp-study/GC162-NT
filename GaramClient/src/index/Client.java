@@ -12,7 +12,7 @@ public class Client {
 		FileInputStream fin;
 		
 		try{
-			Socket soc = new Socket("localhost", 3456);
+			Socket soc = new Socket("uhug.iptime.org", 9001);
 			System.out.println("Connected!");
 			sOut = soc.getOutputStream();
 			InputStream sIn = soc.getInputStream();
