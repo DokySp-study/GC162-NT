@@ -35,6 +35,7 @@ public class Window extends JFrame {
       setContentPane(contentPane);
       contentPane.setLayout(new GridLayout(1, 4, 0, 0));
       
+      
       /* 학생 정보 (타이틀, 사진, 이름, 학번) */
       JPanel panel1 = new JPanel();
       contentPane.add(panel1);
