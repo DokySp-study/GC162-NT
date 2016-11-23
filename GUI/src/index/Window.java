@@ -1,139 +1,120 @@
 package index;
 
 import java.awt.*;
+import javax.imageio.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+
 
 public class Window extends JFrame {
+	Image img = null;
+	GridBagConstraints gbc;
+	SimpleAttributeSet attribs;
+	
+	public static void main(String[] args)
+	{
+		Window wdw = new Window();
+	}
+	public Window()
+	{
+		gbc = new GridBagConstraints();
+		attribs = new SimpleAttributeSet();
+		gbc.weightx = 0.5;
+		gbc.weighty = 0.5;
+		
+		JFrame frm = new JFrame();
+		JPanel pnl1 = new JPanel();
+		JPanel pnl2 = new JPanel();
+		JPanel pnl3 = new JPanel();
+		JPanel pnl4 = new JPanel();
+		Font fNanum = new Font("나눔바른고딕 UltraLight", Font.PLAIN, 25);
+		
+		String strName = "홍길동", strMajor = "소프트웨어 학과", 
+				strNoticeCls1 = "다음 수업은 \n\"", strNoticeKey = "컴퓨터 네트워크(원어강의)", strNoticeCls2 = "\"입니다.",
+				strNoticeList1 = "새로운 \"", strNoticeListKey = "창업", strNoticeList2 = "\"관련 \n학교 공지사항이 있습니다.",
+				strNoticeConcat = strNoticeCls1 + strNoticeKey + strNoticeCls2, 
+				strNoticeListConcat = strNoticeList1 + strNoticeListKey + strNoticeList2;
+		
+		
+		
+		frm.setBounds(80, 80, 1800, 900);
+		frm.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		frm.setLayout(new GridLayout(1, 4, 0, 0));
+		//add panels to frame
+		frm.add(pnl1); frm.add(pnl2); frm.add(pnl3); frm.add(pnl4);
+		//Paint
+		pnl1.setOpaque(true); pnl2.setOpaque(true); pnl3.setOpaque(true); pnl4.setOpaque(true);
+		pnl1.setBackground(Color.GREEN); pnl2.setBackground(Color.WHITE);
+		pnl3.setBackground(Color.GREEN); pnl4.setBackground(Color.WHITE);
+		
+		/* pnl1 */
+		//pnl1 배경
+		pnl1.setLayout(new GridBagLayout());
+		ImageIcon bg = new ImageIcon("bgc.png");
+		
+		
+		Icon iconImg = new ImageIcon("lion.png");
+		JLabel lblImg = new JLabel(iconImg); //Picture
+		lblImg.setFont(fNanum);
+		gbc.weightx = 0.5; gbc.weighty = 0.2;
+		gbc.gridx = 0; gbc.gridy = 0;
+		pnl1.add(lblImg, gbc); 
+		
+		
+		JLabel lblName = new JLabel(strName, SwingConstants.CENTER); //Name
+		gbc.weightx = 0.5; gbc.weighty = 0.05;
+		pnl1.add(lblName);
+		lblName.setFont(fNanum);
+		gbc.gridx = 0; gbc.gridy = 1;
+		pnl1.add(lblName, gbc); 
+		
+		JLabel lblMajor = new JLabel(strMajor, SwingConstants.CENTER); //Major
+		gbc.weightx = 0.5; gbc.weighty = 0.05;
+		lblMajor.setFont(fNanum); 
+		gbc.gridx = 0; gbc.gridy = 2;
+		pnl1.add(lblMajor, gbc); 
+		
+		
+		JTextPane jtpNoticeCls = new JTextPane(); //Next class is ~
+		gbc.weightx = 0.5; gbc.weighty = 0.1;
+		gbc.gridx = 0; gbc.gridy = 3;
+		jtpNoticeCls.setText(strNoticeConcat);
+		jtpNoticeCls.setFont(fNanum);
+		SimpleAttributeSet attribs = new SimpleAttributeSet();
+		StyleConstants.setAlignment(attribs, StyleConstants.ALIGN_CENTER);
+		jtpNoticeCls.setParagraphAttributes(attribs, true);
+		jtpNoticeCls.setEditable(false);
+		jtpNoticeCls.setOpaque(false);
+		pnl1.add(jtpNoticeCls, gbc);
+		
+		
+		JTextPane jtpNoticeList = new JTextPane(); //New announcement is~
+		gbc.weightx = 0.5; gbc.weighty = 0.1;
+		gbc.gridx = 0; gbc.gridy = 4;
+		jtpNoticeList.setText(strNoticeListConcat);
+		jtpNoticeList.setFont(fNanum);
+		StyleConstants.setAlignment(attribs, StyleConstants.ALIGN_CENTER);
+		jtpNoticeList.setParagraphAttributes(attribs, true);
+		jtpNoticeList.setEditable(false);
+		pnl1.add(jtpNoticeList, gbc);
+		jtpNoticeList.setOpaque(false);
 
-   private JPanel contentPane;
-
-   /**
-    * Launch the application.
-    */
-   public static void main(String[] args) {
-      EventQueue.invokeLater(new Runnable() {
-         public void run() {
-            try {
-               Window frame = new Window();
-               frame.setVisible(true);
-            } catch (Exception e) {
-               e.printStackTrace();
-            }
-         }
-      });
-   }
-
-   /**
-    * Create the frame.
-    */
-   public Window() {
-      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      setBounds(100, 100, 1049, 452);
-      contentPane = new JPanel();
-      contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-      setContentPane(contentPane);
-      contentPane.setLayout(new GridLayout(1, 4, 0, 0));
-      
-      
-      /* 학생 정보 (타이틀, 사진, 이름, 학번) */
-      JPanel panel1 = new JPanel();
-      contentPane.add(panel1);
-      panel1.setLayout(new GridLayout(4, 1, 0, 0));
-      
-      JLabel lblNewLabel_Title = new JLabel("학생 정보");
-      lblNewLabel_Title.setSize(new Dimension(78, 50));
-      lblNewLabel_Title.setMinimumSize(new Dimension(78, 50));
-      lblNewLabel_Title.setMaximumSize(new Dimension(78, 50));
-      lblNewLabel_Title.setBorder(null);
-      lblNewLabel_Title.setFont(new Font("나눔바른고딕 UltraLight", Font.PLAIN, 25));
-      lblNewLabel_Title.setHorizontalAlignment(SwingConstants.CENTER);
-      panel1.add(lblNewLabel_Title);
-      
-      JLabel lblNewLabel_Img = new JLabel("Image");
-      lblNewLabel_Img.setHorizontalAlignment(SwingConstants.CENTER);
-      lblNewLabel_Img.setFont(new Font("a스피드", Font.PLAIN, 30));
-      panel1.add(lblNewLabel_Img);
-      
-      JLabel lblNewLabel_Name = new JLabel("이름");
-      lblNewLabel_Name.setFont(new Font("나눔바른고딕 Light", Font.PLAIN, 15));
-      lblNewLabel_Name.setHorizontalAlignment(SwingConstants.CENTER);
-      panel1.add(lblNewLabel_Name);
-      
-      JLabel lblNewLabel_SID = new JLabel("학번");
-      lblNewLabel_SID.setVerticalAlignment(SwingConstants.TOP);
-      lblNewLabel_SID.setFont(new Font("나눔바른고딕 Light", Font.PLAIN, 15));
-      lblNewLabel_SID.setHorizontalAlignment(SwingConstants.CENTER);
-      panel1.add(lblNewLabel_SID);
-      
-      
-      /* 강의자료 및 공지사항 */
-      JPanel panel2 = new JPanel();
-      contentPane.add(panel2);
-      panel2.setLayout(new GridLayout(3, 1, 0, 0));
-      
-      JLabel lblNewLabel_Title2 = new JLabel("강의자료 및 공지사항");
-      lblNewLabel_Title2.setHorizontalAlignment(SwingConstants.CENTER);
-      lblNewLabel_Title2.setFont(new Font("나눔바른고딕 UltraLight", Font.PLAIN, 25));
-      panel2.add(lblNewLabel_Title2);
-      
-      JPanel panel_DayBtn = new JPanel();
-      panel2.add(panel_DayBtn);
-      panel_DayBtn.setLayout(new GridLayout(1, 5, 0, 0));
-      
-      JButton btnNewButton_M = new JButton("M");
-      btnNewButton_M.setFont(new Font("나눔바른고딕 Light", Font.PLAIN, 15));
-      panel_DayBtn.add(btnNewButton_M);
-      
-      JButton btnNewButton_TU = new JButton("T");
-      btnNewButton_TU.setFont(new Font("나눔바른고딕 Light", Font.PLAIN, 15));
-      panel_DayBtn.add(btnNewButton_TU);
-      
-      JButton btnNewButton_W = new JButton("W");
-      btnNewButton_W.setFont(new Font("나눔바른고딕 Light", Font.PLAIN, 15));
-      panel_DayBtn.add(btnNewButton_W);
-      
-      JButton btnNewButton_TH = new JButton("T");
-      btnNewButton_TH.setFont(new Font("나눔바른고딕 Light", Font.PLAIN, 15));
-      panel_DayBtn.add(btnNewButton_TH);
-      
-      JButton btnNewButton_F = new JButton("F");
-      btnNewButton_F.setFont(new Font("나눔바른고딕 Light", Font.PLAIN, 15));
-      panel_DayBtn.add(btnNewButton_F);
-      
-      
-      /* 과제 */
-      JPanel panel3 = new JPanel();
-      contentPane.add(panel3);
-      panel3.setLayout(new GridLayout(2, 1, 0, 0));
-      
-      JLabel lblNewLabel_Title3 = new JLabel("과제");
-      lblNewLabel_Title3.setHorizontalAlignment(SwingConstants.CENTER);
-      lblNewLabel_Title3.setFont(new Font("나눔바른고딕 UltraLight", Font.PLAIN, 25));
-      panel3.add(lblNewLabel_Title3);
-      
-      
-      /* 학교 공지사항 */
-      JPanel panel4 = new JPanel();
-      contentPane.add(panel4);
-      panel4.setLayout(new GridLayout(3, 1, 0, 0));
-      
-      JLabel lblNewLabel_Title4 = new JLabel("학교 공지사항");
-      lblNewLabel_Title4.setHorizontalAlignment(SwingConstants.CENTER);
-      lblNewLabel_Title4.setFont(new Font("나눔바른고딕 UltraLight", Font.PLAIN, 25));
-      panel4.add(lblNewLabel_Title4);
-      
-      JPanel panel_Notice_Set = new JPanel();
-      panel4.add(panel_Notice_Set);
-      panel_Notice_Set.setLayout(new GridLayout(1, 2, 0, 0));
-      
-      JButton btnNewButton_Notice = new JButton("Notice");
-      btnNewButton_Notice.setFont(new Font("나눔바른고딕 Light", Font.PLAIN, 15));
-      panel_Notice_Set.add(btnNewButton_Notice);
-      
-      JButton btnNewButton_Set = new JButton("Setting");
-      btnNewButton_Set.setFont(new Font("나눔바른고딕 Light", Font.PLAIN, 15));
-      panel_Notice_Set.add(btnNewButton_Set);
-   }
+		
+		Icon iconSet = new ImageIcon("gear.png"); //setting btn
+		JButton btnSetting = new JButton(iconSet);
+		btnSetting.setBorderPainted(false);
+		btnSetting.setContentAreaFilled(false);
+		btnSetting.setFocusPainted(false);
+		btnSetting.setOpaque(false);
+		//버튼 왼쪽으로 정렬
+		gbc.weightx = 0.5; gbc.weighty = 0.05;
+		gbc.gridx = 0; gbc.gridy = 5;
+		pnl1.add(btnSetting, gbc);
+		
+		
+		frm.setVisible(true);
+	}
 
 }
