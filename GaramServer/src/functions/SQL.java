@@ -12,48 +12,70 @@ import java.sql.SQLException;
 
 public class SQL {
 	
-	private static String query = null;
+	private String query = null;
+	private String currDB = null;
+	private java.sql.Statement st = null;
+	private ResultSet rs = null;
 	
-	public SQL(String queryInput){
-		query = queryInput;
-	}
-	
-	public static void main(String args[]){
-		
-	}
-	
-	public static int isFileAvailable(){
-		
+	public SQL(String databaseName){
+		currDB = databaseName;
 		Connection con = null;
-		
 		try{
-			
-			con = DriverManager.getConnection("jdbc:mysql://localhost", "root", "hsvf7735!");
-			
-			java.sql.Statement st = null;
-			ResultSet rs = null;
+			con = DriverManager.getConnection("jdbc:mysql://localhost", "root", "12345");
 			st = con.createStatement();
-//			rs = st.executeQuery("use fmdb"); //null;
-//			
-////			if(st.execute("show databases"))
-////				rs = st.getResultSet();
-//			
-//			rs = st.executeQuery("show tables");
-			rs = st.executeQuery(query);
-			
-			while(rs.next()){
-				String str = rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4);
-				System.out.println(str);
-			}
-			
 		}
 		catch(SQLException e){
 			System.out.println(e.getMessage());
 			System.out.println(e.getSQLState());
 		}
 		
+	}
+	
+	
+	
+	public String getResult(String queryInput){
 		
-		return 0;
+		query = queryInput;
+		String result = "";
+		
+		try{
+			do{
+				result += rs.getString(1);// + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4);
+				result += "\n";
+			}
+			while(rs.next());
+		}
+		catch(SQLException e){
+			System.out.println(e.getMessage());
+			System.out.println(e.getSQLState());
+		}
+		
+		return result;
+	}
+	
+	
+	
+	public int isFileAvailable(String queryInput){
+		
+		query = queryInput;
+		
+		try{
+			
+			st.execute("use " + currDB);
+
+			rs = st.executeQuery(query);
+			
+			if(!rs.first())
+				return 0;
+			return 1;
+			
+		}
+		catch(SQLException e){
+			System.out.println(e.getMessage());
+			System.out.println(e.getSQLState());
+			return -1;
+		}
+		
 	}
 	
 }
