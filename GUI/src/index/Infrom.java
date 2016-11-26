@@ -4,6 +4,9 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
+
+import index.Window;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,37 +16,44 @@ import java.io.IOException;
 
 //¿⁄∑· √‚√≥ ≥≤±‚±‚!
 
-public class Infrom extends JFrame{ //1
+public class Infrom{ //1
 
-	JPanel pnlInf = null;
+	/* Infrom cls global variables */
+	public static JPanel pnlInf = null;
 	GridBagConstraints gbc = null;
 	Insets iss = null;
 	Font fNanumBig = new Font("∏º¿∫ ∞ÌµÒ", Font.PLAIN, 30);
 	Font fNanumMed = new Font("∏º¿∫ ∞ÌµÒ", Font.PLAIN, 23);
 	Font fNanumSml = new Font("∏º¿∫ ∞ÌµÒ", Font.PLAIN, 18);
-	Icon icnPic;
+	public static Icon icnPic;
 	Icon icnSet, icnBg;
 	String strName = "";
 	String strMajor = "";
 	String strNextCls = "";
 	String strUnivNotice = "";
+	public JLabel lblPic = new JLabel("");
+	
+	/* InformSet cls global variables */
 	static boolean bInfSet; //InformSetting√¢¿Ã ƒ—¡Æ¿÷≥™ ø©∫Œ, T:O    F:X
+	static boolean bBtnPic; //∫∏¿” πˆ∆∞¿Ã ¥≠∑»¥¬¡ˆ ø©∫Œ, T:ªÁ¡¯ æ»∂ÁøÚ, F:ªÁ¡¯ ∂ÁøÚ
+	
+	public static JFrame frmSet;
 	InformSet InfSet;
-	JFrame frmInfSet;
-
+	JFrame frmInfset = null;
+	
+	
 	public Infrom()
 	{
-		/* variable & setting */
+		/* (InformSet)variable & setting */
+		InfSet = new InformSet();
+		frmInfset = InfSet.GetFrmInfSet();
+		bInfSet = false;
+		bBtnPic = true;
+		
+		/* (Inform)variable & setting */
 		SimpleAttributeSet attribs = new SimpleAttributeSet();
 		StyleConstants.setAlignment(attribs , StyleConstants.ALIGN_CENTER);
-
-		bInfSet = false;
-
-		InfSet = new InformSet();
-		frmInfSet = InfSet.GetFrmInfSet();
-
-
-		icnPic = new ImageIcon("lion.png");
+		
 		icnBg = new ImageIcon("bgc.png");
 		icnSet = new ImageIcon("gear.png");
 		gbc = new GridBagConstraints();
@@ -51,9 +61,7 @@ public class Infrom extends JFrame{ //1
 		iss = new Insets (10, 10, 10, 10);
 		gbc.insets = iss;
 		gbc.weightx = 0.5;
-
-
-		JLabel lblPic;
+		
 		JLabel lblName;
 		JLabel lblMajor;
 		JLabel lblNextCls;
@@ -71,8 +79,13 @@ public class Infrom extends JFrame{ //1
 
 		pnlInf.setBackground(new Color(135,206,235)); //rgb
 
-
-		lblPic = new JLabel(icnPic);
+		//lblPic
+		if(bBtnPic)
+			SetIcnPic("lion.png");
+		else 
+			SetIcnPic("NoImage.png");
+		
+		lblPic.setHorizontalAlignment(JLabel.CENTER);
 		gbc.weighty = 0.4; gbc.weightx = 0.5;
 		gbc.gridx = 0; gbc.gridy = 0;
 		pnlInf.add(lblPic, gbc);
@@ -129,8 +142,6 @@ public class Infrom extends JFrame{ //1
 		gbc.gridx = 0; gbc.gridy = 5;
 		pnlInf.add(btnSet, gbc);
 
-
-
 	}
 
 	public void SetBInfSet()
@@ -138,17 +149,6 @@ public class Infrom extends JFrame{ //1
 
 		bInfSet = !bInfSet;
 
-	}
-
-	public void SetPic(Icon newIcon)
-	{
-		icnPic = newIcon;
-	}
-	
-	
-	public JPanel GetPnlInf()
-	{
-		return this.pnlInf;
 	}
 
 	public void SetName(String newName)
@@ -191,85 +191,131 @@ public class Infrom extends JFrame{ //1
 	}
 
 
+	public JPanel GetPnlInf()
+	{
+		return this.pnlInf;
+	}
+	
+	
+	public void SetIcnPic(String strFileName)
+	{
+		
+		System.out.println(">>SetIconPic. ["+strFileName+"]");
+		ImageIcon img=new ImageIcon(strFileName);
+		img.getImage().flush();
+		lblPic.setIcon(img);
+		
+	}
+	
 	class ActionEventHandler extends JFrame implements ActionListener
 	{
 
 		public void actionPerformed(ActionEvent e)
 		{
 			SetBInfSet();
+			bBtnPic = bBtnPic;
+			
+			if(bInfSet)
+				frmInfset.setVisible(true);
+			else 
+				frmInfset.setVisible(false);
 
-			if(bInfSet){
-				frmInfSet.setVisible(true);
-			}
-			else{ 
-				frmInfSet.setVisible(false);
-			}
 		}
 	}
 
-}
-
-class InformSet extends JFrame
-{
-	JFrame frmSet;
-	GridBagConstraints gbc;
-	Font fNanumBig = new Font("∏º¿∫ ∞ÌµÒ", Font.PLAIN, 30);
-	Font fNanumMed = new Font("∏º¿∫ ∞ÌµÒ", Font.PLAIN, 23);
-	Font fNanumSml = new Font("∏º¿∫ ∞ÌµÒ", Font.PLAIN, 18);
-	JButton btnPic;
-
-	public InformSet()
+	
+	/* InformSet cls */
+	class InformSet extends JFrame
 	{
-		/* Variables setting */
-		Insets iss = new Insets(10, 10, 10, 10);
-		gbc = new GridBagConstraints();
-		gbc.insets = iss;
-		gbc.gridx = 0;
-		gbc.weightx = 0.5; 
-		ActionListener actionHandler = new ActionEventHandler();
-		
+		JFrame frmSet = null;
+		GridBagConstraints gbc;
+		Font fNanumBig = new Font("∏º¿∫ ∞ÌµÒ", Font.PLAIN, 30);
+		Font fNanumMed = new Font("∏º¿∫ ∞ÌµÒ", Font.PLAIN, 23);
+		Font fNanumSml = new Font("∏º¿∫ ∞ÌµÒ", Font.PLAIN, 18);
+		JButton btnPic;
+		public JLabel test;
 
-		/* frmSet setting */
-		frmSet = new JFrame("Setting");
-		frmSet.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		frmSet.getContentPane().setBackground(new Color(240,248,255));
-		frmSet.setUndecorated(true);
-		frmSet.setBounds(80, 430, 150, 450);
-		frmSet.setLayout(new GridBagLayout());
-
-		//JLabel lblTitle = new JLabel(new ImageIcon("gear_cho.png"));
-		JLabel lblTitle = new JLabel("º≥¡§");
-		gbc.gridy = 0; gbc.weighty = 0.1;
-		frmSet.add(lblTitle, gbc);
-		lblTitle.setFont(fNanumMed);
-
-		btnPic = new JButton("∫∏¿”");
-		//btnPic.setBorderPainted(true);
-		//btnPic.setContentAreaFilled(false);
-		//btnPic.setFocusPainted(false);
-		//btnPic.setOpaque(false);
-		gbc.gridy = 1; gbc.weighty = 0.2;
-		frmSet.add(btnPic, gbc);
-		btnPic.setFont(fNanumMed);
-		btnPic.addActionListener(actionHandler);
-	}
-
-	public JButton GetBtnPic()
-	{
-		return this.btnPic;
-	}
-
-	public JFrame GetFrmInfSet()
-	{
-		return this.frmSet;
-	}
-
-	class ActionEventHandler extends JFrame implements ActionListener
-	{
-
-		public void actionPerformed(ActionEvent e)
+		public InformSet()
 		{
-			System.out.println("!@!@");
+
+			
+			/* Variables setting */
+			Insets iss = new Insets(10, 10, 10, 10);
+			gbc = new GridBagConstraints();
+			gbc.insets = iss;
+			gbc.gridx = 0;
+			gbc.weightx = 0.5; 
+			ActionListener actionHandler = new ActionEventHandler();
+
+			/* frmSet setting */
+			frmSet = new JFrame("Setting");
+			frmSet.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+			frmSet.getContentPane().setBackground(new Color(240,248,255));
+			frmSet.setUndecorated(true);
+			frmSet.setBounds(80, 430, 150, 450);
+			frmSet.setLayout(new GridBagLayout());
+
+			/* lbl º≥¡§ */
+			//JLabel lblTitle = new JLabel(new ImageIcon("gear_cho.png"));
+			JLabel lblTitle = new JLabel("º≥¡§");
+			gbc.gridy = 0; gbc.weighty = 0.1;
+			frmSet.add(lblTitle, gbc);
+			lblTitle.setFont(fNanumMed);
+			
+			/* btn ∫∏¿” */
+			btnPic = new JButton();
+			
+			if(bBtnPic)
+				btnPic.setText("∫∏¿”");
+			else 
+				btnPic.setText("æ»∫∏¿”");
+			
+			/*btnPic.setBorder(null);
+			btnPic.setBorderPainted(false);
+			btnPic.setContentAreaFilled(false);
+			btnPic.setFocusPainted(false);
+			btnPic.setOpaque(false);*/
+			gbc.gridy = 1; gbc.weighty = 0.2;
+			frmSet.add(btnPic, gbc);
+			btnPic.setFont(fNanumSml);
+			btnPic.addActionListener(actionHandler);
+			
+			/* lbl test */
+			test = new JLabel();
+			gbc.gridy = 2; gbc.weighty = 0.3;
+			frmSet.add(test, gbc);
+		}
+		
+		public JFrame GetFrmInfSet()
+		{
+			return this.frmSet;
+		}
+		
+		
+		class ActionEventHandler implements ActionListener
+		{
+
+			public void actionPerformed(ActionEvent e)
+			{
+
+				if(!bBtnPic){
+					btnPic.setText("æ»∫∏¿”");
+					SetIcnPic("NoImage.png");
+					
+				}
+				else{ 
+					btnPic.setText("∫∏¿”");
+					SetIcnPic("lion.png");
+				}
+				
+				bBtnPic = !bBtnPic;
+			}
 		}
 	}
+
 }
+
+
+
+
+

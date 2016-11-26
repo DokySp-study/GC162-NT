@@ -2,7 +2,12 @@ package index;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
+//import index.InformSet.ActionEventHandler;
+
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 
 public class Window extends JFrame{
@@ -62,4 +67,32 @@ public class Window extends JFrame{
 		Window mainFrm = new Window();
 		
 	}
+	
+	/*
+	 * 	public JPanel pnlLn = null;
+	public JPanel pnlAssn = null;
+	public JPanel pnlUniv = null;
+	 * 
+	 */
+	public JPanel GetPnlInf()
+	{
+		return this.pnlInf;
+	}
+	
+	public JPanel GetPnlLn()
+	{
+		return this.pnlLn;
+	}
+	
+	public JPanel GetPnlAssn()
+	{
+		return this.pnlAssn;
+	}
+	
+	public JPanel GetpnlUniv()
+	{
+		return this.pnlAssn;
+	}
 }
+
+
