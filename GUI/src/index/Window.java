@@ -1,139 +1,98 @@
 package index;
 
-import java.awt.*;
+import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 
-public class Window extends JFrame {
+//import index.InformSet.ActionEventHandler;
 
-   private JPanel contentPane;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 
-   /**
-    * Launch the application.
-    */
-   public static void main(String[] args) {
-      EventQueue.invokeLater(new Runnable() {
-         public void run() {
-            try {
-               Window frame = new Window();
-               frame.setVisible(true);
-            } catch (Exception e) {
-               e.printStackTrace();
-            }
-         }
-      });
-   }
+public class Window extends JFrame{
+	
+	public JFrame frm = null;
+	public JPanel pnlInf = null;
+	public JPanel pnlLn = null;
+	public JPanel pnlAssn = null;
+	public JPanel pnlUniv = null;
+	
+	public Font fNanum = new Font("¸¼Àº°íµñ", Font.PLAIN, 15);
+	//Font fNanum = new Font("³ª´®¹Ù¸¥°íµñ UltraLight", Font.PLAIN, 15);
+	
+	public Window()
+	{
+		/* frm Setting */
+		//instance
+		Infrom INF = new Infrom();
+		LectureNote LN = new LectureNote();
+		Assignment ASSN = new Assignment();
+		UnivNotice UNIV = new UnivNotice();	
+		
+		pnlInf = INF.GetPnlInf();
+		pnlLn = LN.GetPnlLn();
+		pnlAssn = ASSN.GetPnlAssn();
+		pnlUniv = UNIV.GetPnlUniv();
+		
+		frm = new JFrame("Garam");
+		frm.setBounds(50, 100, 1800, 800);
+		frm.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-   /**
-    * Create the frame.
-    */
-   public Window() {
-      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      setBounds(100, 100, 1049, 452);
-      contentPane = new JPanel();
-      contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-      setContentPane(contentPane);
-      contentPane.setLayout(new GridLayout(1, 4, 0, 0));
-      
-      
-      /* ÇÐ»ý Á¤º¸ (Å¸ÀÌÆ², »çÁø, ÀÌ¸§, ÇÐ¹ø) */
-      JPanel panel1 = new JPanel();
-      contentPane.add(panel1);
-      panel1.setLayout(new GridLayout(4, 1, 0, 0));
-      
-      JLabel lblNewLabel_Title = new JLabel("ÇÐ»ý Á¤º¸");
-      lblNewLabel_Title.setSize(new Dimension(78, 50));
-      lblNewLabel_Title.setMinimumSize(new Dimension(78, 50));
-      lblNewLabel_Title.setMaximumSize(new Dimension(78, 50));
-      lblNewLabel_Title.setBorder(null);
-      lblNewLabel_Title.setFont(new Font("³ª´®¹Ù¸¥°íµñ UltraLight", Font.PLAIN, 25));
-      lblNewLabel_Title.setHorizontalAlignment(SwingConstants.CENTER);
-      panel1.add(lblNewLabel_Title);
-      
-      JLabel lblNewLabel_Img = new JLabel("Image");
-      lblNewLabel_Img.setHorizontalAlignment(SwingConstants.CENTER);
-      lblNewLabel_Img.setFont(new Font("a½ºÇÇµå", Font.PLAIN, 30));
-      panel1.add(lblNewLabel_Img);
-      
-      JLabel lblNewLabel_Name = new JLabel("ÀÌ¸§");
-      lblNewLabel_Name.setFont(new Font("³ª´®¹Ù¸¥°íµñ Light", Font.PLAIN, 15));
-      lblNewLabel_Name.setHorizontalAlignment(SwingConstants.CENTER);
-      panel1.add(lblNewLabel_Name);
-      
-      JLabel lblNewLabel_SID = new JLabel("ÇÐ¹ø");
-      lblNewLabel_SID.setVerticalAlignment(SwingConstants.TOP);
-      lblNewLabel_SID.setFont(new Font("³ª´®¹Ù¸¥°íµñ Light", Font.PLAIN, 15));
-      lblNewLabel_SID.setHorizontalAlignment(SwingConstants.CENTER);
-      panel1.add(lblNewLabel_SID);
-      
-      
-      /* °­ÀÇÀÚ·á ¹× °øÁö»çÇ× */
-      JPanel panel2 = new JPanel();
-      contentPane.add(panel2);
-      panel2.setLayout(new GridLayout(3, 1, 0, 0));
-      
-      JLabel lblNewLabel_Title2 = new JLabel("°­ÀÇÀÚ·á ¹× °øÁö»çÇ×");
-      lblNewLabel_Title2.setHorizontalAlignment(SwingConstants.CENTER);
-      lblNewLabel_Title2.setFont(new Font("³ª´®¹Ù¸¥°íµñ UltraLight", Font.PLAIN, 25));
-      panel2.add(lblNewLabel_Title2);
-      
-      JPanel panel_DayBtn = new JPanel();
-      panel2.add(panel_DayBtn);
-      panel_DayBtn.setLayout(new GridLayout(1, 5, 0, 0));
-      
-      JButton btnNewButton_M = new JButton("M");
-      btnNewButton_M.setFont(new Font("³ª´®¹Ù¸¥°íµñ Light", Font.PLAIN, 15));
-      panel_DayBtn.add(btnNewButton_M);
-      
-      JButton btnNewButton_TU = new JButton("T");
-      btnNewButton_TU.setFont(new Font("³ª´®¹Ù¸¥°íµñ Light", Font.PLAIN, 15));
-      panel_DayBtn.add(btnNewButton_TU);
-      
-      JButton btnNewButton_W = new JButton("W");
-      btnNewButton_W.setFont(new Font("³ª´®¹Ù¸¥°íµñ Light", Font.PLAIN, 15));
-      panel_DayBtn.add(btnNewButton_W);
-      
-      JButton btnNewButton_TH = new JButton("T");
-      btnNewButton_TH.setFont(new Font("³ª´®¹Ù¸¥°íµñ Light", Font.PLAIN, 15));
-      panel_DayBtn.add(btnNewButton_TH);
-      
-      JButton btnNewButton_F = new JButton("F");
-      btnNewButton_F.setFont(new Font("³ª´®¹Ù¸¥°íµñ Light", Font.PLAIN, 15));
-      panel_DayBtn.add(btnNewButton_F);
-      
-      
-      /* °úÁ¦ */
-      JPanel panel3 = new JPanel();
-      contentPane.add(panel3);
-      panel3.setLayout(new GridLayout(2, 1, 0, 0));
-      
-      JLabel lblNewLabel_Title3 = new JLabel("°úÁ¦");
-      lblNewLabel_Title3.setHorizontalAlignment(SwingConstants.CENTER);
-      lblNewLabel_Title3.setFont(new Font("³ª´®¹Ù¸¥°íµñ UltraLight", Font.PLAIN, 25));
-      panel3.add(lblNewLabel_Title3);
-      
-      
-      /* ÇÐ±³ °øÁö»çÇ× */
-      JPanel panel4 = new JPanel();
-      contentPane.add(panel4);
-      panel4.setLayout(new GridLayout(3, 1, 0, 0));
-      
-      JLabel lblNewLabel_Title4 = new JLabel("ÇÐ±³ °øÁö»çÇ×");
-      lblNewLabel_Title4.setHorizontalAlignment(SwingConstants.CENTER);
-      lblNewLabel_Title4.setFont(new Font("³ª´®¹Ù¸¥°íµñ UltraLight", Font.PLAIN, 25));
-      panel4.add(lblNewLabel_Title4);
-      
-      JPanel panel_Notice_Set = new JPanel();
-      panel4.add(panel_Notice_Set);
-      panel_Notice_Set.setLayout(new GridLayout(1, 2, 0, 0));
-      
-      JButton btnNewButton_Notice = new JButton("Notice");
-      btnNewButton_Notice.setFont(new Font("³ª´®¹Ù¸¥°íµñ Light", Font.PLAIN, 15));
-      panel_Notice_Set.add(btnNewButton_Notice);
-      
-      JButton btnNewButton_Set = new JButton("Setting");
-      btnNewButton_Set.setFont(new Font("³ª´®¹Ù¸¥°íµñ Light", Font.PLAIN, 15));
-      panel_Notice_Set.add(btnNewButton_Set);
-   }
-
+		frm.setLayout(new GridLayout(1, 4, 10, 10));
+		
+		frm.add(pnlInf);
+		frm.add(pnlLn);
+		frm.add(pnlAssn);
+		frm.add(pnlUniv);
+		
+		/* pnl1 */
+		
+		
+		
+		/* pnl2 */
+		
+		
+		/* pnl3 */
+		
+		
+		/* pnl4 */
+		
+		
+		frm.setVisible(true);
+	}
+	
+	public static void main(String[] args)
+	{
+		Window mainFrm = new Window();
+		
+	}
+	
+	/*
+	 * 	public JPanel pnlLn = null;
+	public JPanel pnlAssn = null;
+	public JPanel pnlUniv = null;
+	 * 
+	 */
+	public JPanel GetPnlInf()
+	{
+		return this.pnlInf;
+	}
+	
+	public JPanel GetPnlLn()
+	{
+		return this.pnlLn;
+	}
+	
+	public JPanel GetPnlAssn()
+	{
+		return this.pnlAssn;
+	}
+	
+	public JPanel GetpnlUniv()
+	{
+		return this.pnlAssn;
+	}
 }
+
+
