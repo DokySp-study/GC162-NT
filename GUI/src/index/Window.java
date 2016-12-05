@@ -18,7 +18,7 @@ public class Window extends JFrame{
 	public JPanel pnlAssn = null;
 	public JPanel pnlUniv = null;
 	
-	public Font fNanum = new Font("³ª´®¹Ù¸¥°íµñ UltraLight", Font.PLAIN, 15);
+	public Font fNanum = new Font("¸¼Àº°íµñ", Font.PLAIN, 15);
 	//Font fNanum = new Font("³ª´®¹Ù¸¥°íµñ UltraLight", Font.PLAIN, 15);
 	
 	public Window()

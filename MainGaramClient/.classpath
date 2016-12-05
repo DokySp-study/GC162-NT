@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="lib" path="/Users/KDK/git/Project_Garam/MainGaramClient/ext/htmlunit-2.23-OSGi.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/KDK/git/Project_Garam/MainGaramClient/ext/commons-logging-1.2-javadoc.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Users/KDK/git/Project_Garam/MainGaramClient/ext/commons-logging-1.2.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
