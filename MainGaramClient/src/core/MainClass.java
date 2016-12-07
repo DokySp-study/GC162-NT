@@ -204,7 +204,7 @@ public class MainClass {
 			for(int j = 0; j < lecList[currTime[5]].size(); j++){
 				LecData tmp = lecList[currTime[5]].getItem(j);
 				if(tmp.articleNo == 0 && tmp.menuSec == 0){
-					todayClass += tmp.lecName + "<br>";
+					todayClass += "\"" + tmp.lecName.substring(0,10) + "...\"<br>";
 				}
 			}
 			todayClass = todayClass.substring(0, todayClass.length()-4);

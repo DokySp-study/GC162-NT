@@ -175,12 +175,17 @@ public class GUI extends Thread implements ActionListener {
 				logOn();
 			}
 			else if(status == -1){
-				lblStatus.setText("Cannot login homepage!");
+				lblStatus.setText("Cannot login homepage");
 				lblStatusBlink.start();
 				txtID.setEnabled(true);
 				txtPW.setEnabled(true);
 
 				
+			}else if(status == -408){
+				lblStatus.setText("Internet connection Timeout");
+				lblStatusBlink.start();
+				txtID.setEnabled(true);
+				txtPW.setEnabled(true);
 			}
 			else{
 				lblStatus.setText("Internet connection problem");
