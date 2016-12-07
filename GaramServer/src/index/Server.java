@@ -17,7 +17,7 @@ public class Server {
 			
 			//This field is main-stream function of Server class.			
 			
-			echo = new ServerSocket(3456);
+			echo = new ServerSocket(9001);
 			System.out.println("Echo server running");
 			
 			while(true)
