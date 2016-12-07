@@ -113,7 +113,7 @@ public class LectureNote implements ActionListener { //2
         ////////////////////////////////
         /////////// Scroll /////////////
         ////////////////////////////////
-        String[] input = {":! asdf"};
+        String[] input = {":!오늘 강의가 없습니다."};
         updateScrollList(input);
         scrollPan.repaint();
         

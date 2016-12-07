@@ -91,7 +91,7 @@ public class GUI {
 //		grid.setConstraints(pnlInf, grid_c);
 //		frm.add(pnlUniv);//panel univ information
 		
-		//frm.setResizable(false);
+		frm.setResizable(false);
 		frm.repaint();
 		frm.setVisible(true);
 	}
@@ -106,7 +106,7 @@ public class GUI {
 	public static void repaint(){
 		int currWinX = frm.getX();
 		int currWinY = frm.getY();
-		frm.setBounds(currWinX, currWinY, GUI.WINDOW_WIDTH, GUI.WINDOW_HEIGHT+1);
+		frm.setBounds(currWinX, currWinY, GUI.WINDOW_WIDTH+1, GUI.WINDOW_HEIGHT);
 		frm.setBounds(currWinX, currWinY, GUI.WINDOW_WIDTH, GUI.WINDOW_HEIGHT);
 	}
 	

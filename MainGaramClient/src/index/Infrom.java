@@ -33,7 +33,7 @@ public class Infrom{ //1
 	Insets iss = null;
 	
 	Font fNanumBig = new Font("", Font.BOLD, 30);
-	Font fNanumMed = new Font("", Font.PLAIN, 20);
+	Font fNanumMed = new Font("", Font.PLAIN, 17);
 	Font fNanumSml = new Font("", Font.PLAIN, 15);
 	
 	public static Icon icnPic;
@@ -289,8 +289,8 @@ public class Infrom{ //1
 		else{
 			removeWelcomeMsg();
 			this.lblNextCls.setText(
-					"<html><div style=\"text-align:center\"><b> 오늘 수업은<br>\"" + newNC +
-					"\"<br>입니다.<br>&nbsp;</b></div></html>");
+					"<html><div style=\"text-align:center\"><b> 오늘 수업은<br>" + newNC +
+					"<br>입니다.<br>&nbsp;</b></div></html>");
 		}
 		
 		if(isAllLblEmpty())
