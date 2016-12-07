@@ -21,7 +21,7 @@ public class SQL {
 		currDB = databaseName;
 		Connection con = null;
 		try{
-			con = DriverManager.getConnection("jdbc:mysql://localhost", "root", "12345");
+			con = DriverManager.getConnection("jdbc:mysql://localhost", "root", "hsvf7735!");
 			st = con.createStatement();
 		}
 		catch(SQLException e){
@@ -33,7 +33,7 @@ public class SQL {
 	
 	
 	
-	public String getResult(String queryInput){
+	public String[] getResult(String queryInput){
 		
 		query = queryInput;
 		String result = "";
@@ -47,8 +47,8 @@ public class SQL {
 				return null;
 			
 			do{
-				result += rs.getString(1);// + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4);
-				result += "\n";
+				result += rs.getString(1) + "/*.*/" + rs.getString(2) + "/*.*/" + rs.getString(3) + "/*.*/" + rs.getString(4) + "/*.*/" + rs.getString(5);
+				result += "##inf##";
 			}
 			while(rs.next());
 			
@@ -59,7 +59,9 @@ public class SQL {
 			return null;
 		}
 		
-		return result;
+		String[] out = result.split("##inf##");
+		
+		return out;
 	}
 	
 	
