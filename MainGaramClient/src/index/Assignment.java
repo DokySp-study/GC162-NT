@@ -1,7 +1,13 @@
 package index;
 
 import javax.swing.*;
+
+import core.MainClass;
+import datum.AssiData;
+import datum.LecData;
 import functions.MakeMargin;
+import functions.ManageDir;
+
 import java.awt.*;
 
 
@@ -74,7 +80,7 @@ public class Assignment {
         /////////// Scroll /////////////
         ////////////////////////////////
         
-        String[] input = {":! asdf"};
+        String[] input = {":! 준비중입니다."};
         updateScrollList(input);
         scrollPan.repaint();
         
@@ -108,6 +114,67 @@ public class Assignment {
         pnlLn.add(scrollPan);
         
     }
+    
+    
+    
+public String makeScrollData(){
+		
+		String writeScrollList = "";
+		
+		for(int j = 0; j < MainClass.assiData.size(); j++){
+			
+			AssiData tmp = MainClass.assiData.get(j);
+			
+					
+					//FileCheck
+					//ok- :$+1    no- :$+0    done- :$-1
+					writeScrollList += ":$";
+					if(tmp.status >= 0)
+						writeScrollList += "+" + tmp.status;
+					else
+						writeScrollList += tmp.status;
+					
+					
+					writeScrollList += "<html>";
+						writeScrollList += tmp.title;
+						writeScrollList += "<br>";
+						writeScrollList += "<h4>";
+							writeScrollList += tmp.lecName;
+						writeScrollList += "</h4>";
+						
+						writeScrollList += "<!-->";
+							writeScrollList += "##item#" + tmp.forumSec;
+							writeScrollList += "##item#" + tmp.menuSec;
+							writeScrollList += "##item#" + tmp.articleNo + "##item#";
+						writeScrollList += "-->";
+						
+					writeScrollList += "</html>";
+					writeScrollList += ", ";
+					
+			
+		}
+		
+		return writeScrollList;
+		
+	}
+
+
+
+	public void makeScrollList(String writeScrollList){
+		
+		if(writeScrollList.length() != 0){
+			String[] printScroll = writeScrollList.split(", ");
+			updateScrollList(printScroll);
+			GUI.repaint();
+		}
+		else{
+			String[] printScroll = {":!과제가 없습니다."};
+			updateScrollList(printScroll);
+			GUI.repaint();
+		}
+		
+	}
+    
     
     
     

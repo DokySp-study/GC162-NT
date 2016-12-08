@@ -40,7 +40,7 @@ public class GUI {
 		window.add(lblBg);
 		grid_c.gridx = 0;
 		grid_c.gridy = 1;
-		a.setConstraints(lblGauge, grid_c);
+		//a.setConstraints(lblGauge, grid_c);
 		
 		window.add(lblGauge);
 		

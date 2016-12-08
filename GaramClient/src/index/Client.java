@@ -128,6 +128,7 @@ public class Client {
 						
 						
 						//int fileNum = result.length;
+						int fileNum = 0;
 						System.out.println(fileNum + " files Transmitted Client to Server");
 						///////////
 						sOutStream.writeInt(fileNum);
@@ -137,7 +138,7 @@ public class Client {
 							String dir = "lecFile/" + forum_no + "/" + board_no + "/" + arti_no;
 							
 							////////
-							sOutStream.writeUTF(fileName);
+							//--sOutStream.writeUTF(fileName);
 							
 							fin = new FileInputStream(new File(dir));
 							
@@ -213,13 +214,10 @@ public class Client {
 
 
 /*
-
 package myPackage;
-
 import java.io.*;
 import java.net.*;
 import java.util.Scanner;
-
 public class TCPClient {
 	
 	public static void main(String args[]){
@@ -276,6 +274,4 @@ public class TCPClient {
 	}
 	
 }
-
-
 */
