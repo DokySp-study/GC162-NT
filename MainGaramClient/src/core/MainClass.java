@@ -114,12 +114,15 @@ public class MainClass {
 			indexWindow.INF.SetName(userName);
 			indexWindow.INF.SetMajor(userDept);
 			
+			GUI.repaint();
+			
+			
+			
 			ArrayList<LecData> lectureData = new ArrayList<LecData>();
 			assiData = new ArrayList<AssiData>();
 			
 			new LecData().getData(session, lectureData);
 			new AssiData().getData(session, assiData);
-			
 			//파일 및 사용자 추가 주소에서 긁어오는 부분 필요
 			
 			
