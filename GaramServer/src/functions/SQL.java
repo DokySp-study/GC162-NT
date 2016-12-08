@@ -40,14 +40,13 @@ public class SQL {
 		
 		try{
 			st.execute("use " + currDB);
-
 			rs = st.executeQuery(query);
 			
 			if(!rs.first())
 				return null;
 			
 			do{
-				result += rs.getString(1) + "/*.*/" + rs.getString(2) + "/*.*/" + rs.getString(3) + "/*.*/" + rs.getString(4) + "/*.*/" + rs.getString(5);
+				result += rs.getString("forum_sec") + "/*.*/" + rs.getString("article_no") + "/*.*/" + rs.getString("file_name") + "/*.*/" + rs.getString("date") + "/*.*/" + rs.getString("TTL");
 				result += "##inf##";
 			}
 			while(rs.next());
@@ -58,12 +57,30 @@ public class SQL {
 			System.out.println(e.getSQLState());
 			return null;
 		}
-		
+		System.out.println(result);
 		String[] out = result.split("##inf##");
 		
 		return out;
 	}
 	
+	
+	
+	public boolean sendQuery(String query){
+		
+		try {
+			
+			st.execute("use " + currDB);
+			st.executeUpdate(query);
+			
+			return true;
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+	}
 	
 	
 	public int isFileAvailable(String queryInput){
