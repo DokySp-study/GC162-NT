@@ -15,10 +15,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
+import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -43,6 +48,10 @@ public class GUI extends Thread implements ActionListener {
 
 	GachonSession session = new GachonSession();
 	
+	PrintWriter fout;
+	File fsaveId;
+	
+	
 	
 	public GUI() {
 
@@ -59,10 +68,27 @@ public class GUI extends Thread implements ActionListener {
 		index.getContentPane().add(AniPan);
 		index.getContentPane().add(indexPan);
 		
-		//Testing
-		txtID.setText("");
+		
+		
+		//Save user id
+		
+		fsaveId = new File("saveId.txt");
+		String tmpId = "";
+		if(fsaveId.exists()){
+			Scanner fin = null;
+			try {
+				fin = new Scanner(fsaveId);
+				tmpId = fin.next();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
+
+		txtID.setText(tmpId);
 		txtPW.setText("");
-		txtID.grabFocus();
+
+		
 		
 		indexPan.setLayout(gridIDPWIndex);
 		grid_c.gridx = 0;
@@ -76,6 +102,8 @@ public class GUI extends Thread implements ActionListener {
 		indexPan.add(btnLogin);
 		btnLogin.setIcon(new ImageIcon("img/welcome/btnLoginImg.png"));
 		btnLogin.setBorderPainted(false);
+		btnLogin.setContentAreaFilled(false);
+		btnLogin.setFocusPainted(false);
 		
 		grid_c.gridx = 0;
 		grid_c.gridy = 1;
@@ -145,6 +173,15 @@ public class GUI extends Thread implements ActionListener {
 	
 	
 	public void actionPerformed(ActionEvent e) {
+		if(!txtID.getText().equals("")){
+			try {
+				fout = new PrintWriter(fsaveId);
+				fout.println(txtID.getText());
+				fout.close();
+			} catch (Exception f) {
+				f.printStackTrace();
+			}
+		}
 		
 		loginProcess();
 		
@@ -242,7 +279,11 @@ public class GUI extends Thread implements ActionListener {
 		img = new ImageIcon("img/welcome/splash.png");
 		gifImg.setIcon(img);
 		indexPan.setVisible(true);
-		txtID.grabFocus();
+		
+		if(txtID.equals(""))
+			txtID.grabFocus();
+		else
+			txtPW.grabFocus();
 		
 	}
 	

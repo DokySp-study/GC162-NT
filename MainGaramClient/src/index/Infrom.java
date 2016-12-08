@@ -8,6 +8,7 @@ import javax.swing.text.StyleConstants;
 import com.sun.scenario.Settings;
 
 import datum.SetVals;
+import functions.RSSReader;
 import index.GUI;
 
 import java.awt.*;
@@ -16,9 +17,10 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 
 
-public class Infrom{ //1
+public class Infrom implements ActionListener { //1
 
 	/* Infrom cls global variables */
 	public JPanel pnlInf = null;
@@ -33,7 +35,7 @@ public class Infrom{ //1
 	Insets iss = null;
 	
 	Font fNanumBig = new Font("", Font.BOLD, 30);
-	Font fNanumMed = new Font("", Font.PLAIN, 17);
+	Font fNanumMed = new Font("", Font.PLAIN, 23);
 	Font fNanumSml = new Font("", Font.PLAIN, 15);
 	
 	public static Icon icnPic;
@@ -226,6 +228,22 @@ public class Infrom{ //1
 		pnlContain.add(pnlSubContain2);
 		
 		
+		btnSet = new JButton();
+		ImageIcon icnBt = new ImageIcon("img/index/btnNoti.png");
+		tmpImg = icnBt.getImage();
+		tmpImg = tmpImg.getScaledInstance(10, 10, Image.SCALE_SMOOTH);
+		icnBt = new ImageIcon(tmpImg);
+//		btnSet.setBorderPainted(false);
+//		btnSet.setContentAreaFilled(false);
+//		btnSet.setFocusPainted(false);
+		btnSet.addActionListener(this);
+		
+		grid_const = new GridBagConstraints();
+		grid_const.gridx = 0;
+		grid_const.gridy = 0;
+		gridContain.setConstraints(btnSet, grid_const);
+		pnlSubContain2.add(btnSet);
+		
 		
 //		//btnSet
 //		btnSet = new JButton(icnSet);
@@ -245,17 +263,6 @@ public class Infrom{ //1
 
 	}
 
-	
-	
-	
-	public void SetboolSet()
-	{
-
-		boolSet = !boolSet;
-
-	}
-
-	
 	
 	
 	public void SetName(String newName)
@@ -471,20 +478,20 @@ public class Infrom{ //1
 //		
 //	}
 	
-	
-	class ActionEventHandler extends JFrame implements ActionListener
-	{
 
-		public void actionPerformed(ActionEvent e)
-		{
-			SetboolSet();
-			
-//			if(boolSet)
-//				frmInfset.setVisible(true);
-//			else 
-//				frmInfset.setVisible(false);
 
-		}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		JFrame RSS = new JFrame();
+		
+		RSS.setSize(1200, 50);
+		
+		RSSReader tmp = new RSSReader();
+		tmp.writeFeed(new HashMap<String, String>());
+		JLabel text = new JLabel(tmp.getDocumentText());
+		RSS.getContentPane().add(text);
+		
+		RSS.setVisible(true);
 		
 	}
 

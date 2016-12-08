@@ -15,6 +15,7 @@ import javax.swing.JComboBox;
 import javax.swing.JList;
 
 import functions.SessionDownloader;
+import functions.URLOpen;
 
 //Referred by...
 //http://woowowoong.blogspot.kr/2011/02/java-cellrenderer-demo.html
@@ -56,8 +57,15 @@ public class ScrollList {
                 	String[] tmpSplit = tmp.split("##item#");
                 	
                 	//System.out.println(Integer.parseInt(tmpSplit[1]) + "/" + Integer.parseInt(tmpSplit[2]) + "/" + Integer.parseInt(tmpSplit[3]));
-                	
-                	LectureNote.checkNote(list.getSelectedIndex(), Integer.parseInt(tmpSplit[1]), Integer.parseInt(tmpSplit[2]), Integer.parseInt(tmpSplit[3]) );
+                	if(tmp.indexOf(":@") == 0 && tmp.indexOf(":#") == 0)
+                		LectureNote.checkNote(list.getSelectedIndex(), Integer.parseInt(tmpSplit[1]), Integer.parseInt(tmpSplit[2]), Integer.parseInt(tmpSplit[3]) );
+                	else if(tmp.indexOf(":!") == 0){
+                		System.out.println(tmp);
+                		URLOpen.open("http://eclass.gachon.ac.kr/main/myMain.jsp?Forum_seq="+Integer.parseInt(tmpSplit[1]));
+                	}
+                	else if(tmp.indexOf(":$") == 0){
+                		URLOpen.open("http://eclass.gachon.ac.kr/board/view.jsp?Forum_seq="+Integer.parseInt(tmpSplit[1]) +"&Menu_seq=" + Integer.parseInt(tmpSplit[2]) + "&article_no=" + Integer.parseInt(tmpSplit[3]));
+                	}
                 	
                 }
             }
@@ -92,7 +100,15 @@ class IconCellRenderer extends DefaultListCellRenderer{
 	public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean CellHasFocus){
                 
 				String text = value.toString();
-                setText(text.substring(2));
+				
+        		if(text.indexOf(":$") == 0)
+        			setText(text.substring(4));
+        		else
+        			setText(text.substring(2));
+        		
+        		
+        		
+        		
                 this.setFont(new Font("", Font.PLAIN, 20));
                 
                 
@@ -100,10 +116,22 @@ class IconCellRenderer extends DefaultListCellRenderer{
                 	
                 	ImageIcon img;
                 	
-                	if(text.indexOf(":@") == 0)
+                	if(text.indexOf(":@") == 0){
                 		img = new ImageIcon("img/index/btnComplete.png");
-                	else if(text.indexOf(":#") == 0)
+                	}
+                	else if(text.indexOf(":#") == 0){
                 		img = new ImageIcon("img/index/btnDownload.png");
+                	}
+                	
+                	else if(text.indexOf(":$") == 0){
+                		if(Integer.parseInt(text.substring(2,4)) == 1)
+                			img = new ImageIcon("img/index/btnOk.png");
+                		else if(Integer.parseInt(text.substring(2,4)) == 0)
+                			img = new ImageIcon("img/index/btnNo.png");
+                		else
+                			img = new ImageIcon("img/index/btnDn.png");
+                	}
+                	
                 	else{ //":!"
                 		img = new ImageIcon("empty");
                 	}
@@ -120,8 +148,8 @@ class IconCellRenderer extends DefaultListCellRenderer{
                 
                 
                 
-                if(isSelected == true && text.indexOf(":!") != 0){
-                    setBackground(new Color(248,248,248));
+                if(isSelected == true){  //isSelected == true && text.indexOf(":!"
+                    setBackground(new Color(240,240,240));
                     setForeground(Color.black);
         	        
                 }else{
