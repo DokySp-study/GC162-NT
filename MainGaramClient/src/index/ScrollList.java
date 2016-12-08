@@ -57,7 +57,7 @@ public class ScrollList {
                 	String[] tmpSplit = tmp.split("##item#");
                 	
                 	//System.out.println(Integer.parseInt(tmpSplit[1]) + "/" + Integer.parseInt(tmpSplit[2]) + "/" + Integer.parseInt(tmpSplit[3]));
-                	if(tmp.indexOf(":@") == 0 && tmp.indexOf(":#") == 0)
+                	if(tmp.indexOf(":@") == 0 || tmp.indexOf(":#") == 0)
                 		LectureNote.checkNote(list.getSelectedIndex(), Integer.parseInt(tmpSplit[1]), Integer.parseInt(tmpSplit[2]), Integer.parseInt(tmpSplit[3]) );
                 	else if(tmp.indexOf(":!") == 0){
                 		System.out.println(tmp);

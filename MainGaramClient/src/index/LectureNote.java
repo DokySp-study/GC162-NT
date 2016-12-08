@@ -350,7 +350,7 @@ public class LectureNote implements ActionListener { //2
 					System.out.println("2-1");
 					sharedClass.buildDOWScrollList(saveBtnNum);
 					GUI.repaint();
-					OpenFile.open(sec_num, board_num, article_num);
+					//OpenFile.open(sec_num, board_num, article_num);
 				}
 				else{
 					SessionDownloader.download(MainClass.session.getSession(), sec_num, board_num, article_num);
