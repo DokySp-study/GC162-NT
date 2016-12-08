@@ -119,6 +119,9 @@ public class GaramServerDownloader {
 					available = SessionDownloader.download(MainClass.session.getSession(), forum_no, board_no, arti_no);
 					//Download lecture note from home page
 					
+					OpenFile.open(forum_no, board_no, arti_no);
+					//Pre-open files
+					
 					if(available){
 						//File not available -> Transmit file.
 						sOutStream.writeInt(1);
