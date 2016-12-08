@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
+import datum.AssiData;
 import datum.LecData;
 import datum.LecDayOfWeek;
 import functions.SessionDownloader;
@@ -37,6 +38,8 @@ public class MainClass {
 	
 	public Font fNanum;// = new Font("맑은고딕", Font.PLAIN, 15);
 	public static LecDayOfWeek[] lecList = {new LecDayOfWeek(), new LecDayOfWeek(), new LecDayOfWeek(), new LecDayOfWeek(), new LecDayOfWeek()};
+	public static ArrayList<AssiData> assiData;
+	
 	public static GachonSession session;
 	public static loading.GUI loadingWindow;
 	
@@ -112,8 +115,10 @@ public class MainClass {
 			indexWindow.INF.SetMajor(userDept);
 			
 			ArrayList<LecData> lectureData = new ArrayList<LecData>();
+			assiData = new ArrayList<AssiData>();
 			
 			new LecData().getData(session, lectureData);
+			new AssiData().getData(session, assiData);
 			
 			//파일 및 사용자 추가 주소에서 긁어오는 부분 필요
 			
@@ -196,18 +201,27 @@ public class MainClass {
 			System.out.println(currTime[5] + "요일 수업");
 			
 			String writeScrollList = indexWindow.LN.makeScrollData(currTime[5]);
+			String writeAssiScrollList = indexWindow.ASSN.makeScrollData();
+			
 			indexWindow.LN.makeScrollList(writeScrollList);
+			indexWindow.ASSN.makeScrollList(writeAssiScrollList);
+			
 			GUI.repaint();
+			//buildDOWScrollList
+			
+			
+			
 			
 			
 			String todayClass = "";
 			for(int j = 0; j < lecList[currTime[5]].size(); j++){
 				LecData tmp = lecList[currTime[5]].getItem(j);
 				if(tmp.articleNo == 0 && tmp.menuSec == 0){
-					todayClass += "\"" + tmp.lecName.substring(0,10) + "...\"<br>";
+					todayClass += "\"" + tmp.lecName.substring(0,12) + "...\"<br>";
 				}
 			}
-			todayClass = todayClass.substring(0, todayClass.length()-4);
+			if(!todayClass.equals(""))
+				todayClass = todayClass.substring(0, todayClass.length()-4);
 			
 			indexWindow.INF.SetNextCls(todayClass);
 			

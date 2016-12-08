@@ -4,6 +4,7 @@ import javax.swing.*;
 
 import core.MainClass;
 import datum.LecData;
+import functions.GaramServerDownloader;
 import functions.MakeMargin;
 import functions.ManageDir;
 import functions.OpenFile;
@@ -18,7 +19,7 @@ public class LectureNote implements ActionListener { //2
 	public static LectureNote sharedClass;
 	
     Font fNanumBig = new Font("¸¼Àº °íµñ", Font.PLAIN, 30);
-    Font fNanumMed = new Font("¸¼Àº °íµñ", Font.PLAIN, 23);
+    Font fNanumMed = new Font("¸¼Àº °íµñ", Font.PLAIN, 25);
     Font fNanumSml = new Font("¸¼Àº °íµñ", Font.PLAIN, 18);
     public JPanel pnlLn;
     GridBagConstraints gbc;
@@ -98,6 +99,8 @@ public class LectureNote implements ActionListener { //2
             sGrid.setConstraints(btnDate[i], grid_conf);
             btnDate[i].setIcon(icnDOW);
             btnDate[i].setBorderPainted(false);
+            btnDate[i].setContentAreaFilled(false);
+            btnDate[i].setFocusPainted(false);
             pnlBtnList.add(btnDate[i]);
         }
         
@@ -245,6 +248,11 @@ public class LectureNote implements ActionListener { //2
 					writeScrollList += "<html><font size = 4>&nbsp;</font><br>";
 						writeScrollList += tmp.lecName;
 					writeScrollList += "<br><font size = 4>&nbsp;</font></html>";
+						writeScrollList += "<!-->";
+						writeScrollList += "##item#" + tmp.forumSec;
+						writeScrollList += "##item#" + tmp.menuSec;
+						writeScrollList += "##item#" + tmp.articleNo + "##item#";
+						writeScrollList += "-->";
 					writeScrollList += ", ";
 					isEmptyLecNote = true;
 					
@@ -323,18 +331,39 @@ public class LectureNote implements ActionListener { //2
 		
 		boolean isDownloaded = false;
 		
-		//if(file is exist)
-		//  open file in local  boolean isDownloaded
-		//else
-			isDownloaded = SessionDownloader.download(MainClass.session.getSession(), sec_num, board_num, article_num);
-		
-		
-		if(isDownloaded){
-			sharedClass.buildDOWScrollList(saveBtnNum);
-			GUI.repaint();
+		if(ManageDir.find(sec_num, board_num, article_num)){
+			OpenFile.open(sec_num, board_num, article_num);
 		}
 		else{
-			OpenFile.open(sec_num, board_num, article_num);
+			try{
+				System.out.println("1");
+				isDownloaded = GaramServerDownloader.getFromServer(sec_num, board_num, article_num);
+				System.out.println(isDownloaded);
+				
+				//if(file is exist)
+				//  open file in local  boolean isDownloaded
+				//else
+				//isDownloaded = SessionDownloader.download(MainClass.session.getSession(), sec_num, board_num, article_num);
+				
+				
+				if(isDownloaded){
+					System.out.println("2-1");
+					sharedClass.buildDOWScrollList(saveBtnNum);
+					GUI.repaint();
+					OpenFile.open(sec_num, board_num, article_num);
+				}
+				else{
+					SessionDownloader.download(MainClass.session.getSession(), sec_num, board_num, article_num);
+					System.out.println("2-2");
+					sharedClass.buildDOWScrollList(saveBtnNum);
+					GUI.repaint();
+					OpenFile.open(sec_num, board_num, article_num);
+				}
+			}
+			catch(Exception e){
+				loading.GUI.terminate();
+			}
+			
 		}
 		
 		loading.GUI.terminate();
