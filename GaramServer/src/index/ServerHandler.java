@@ -51,7 +51,6 @@ public class ServerHandler extends Thread {
 			
 			
 			
-			
 			String[] result = database.getResult(
 					"select * from filelist where "
 					+ "forum_sec = " + forum_sec + " and "
@@ -87,55 +86,63 @@ public class ServerHandler extends Thread {
 					
 					///////////////
 					///////////////
-					
 					for(int i = 0; i < fileNum; i++){
 						
 						//////////
+						//sOutStream.writeInt(1);
 						String fileName = sInStream.readUTF();
+						System.out.println("File name: " + fileName);
 						//////////
 						int date = sInStream.readInt();
+						System.out.println("Date: " + date);
 						
 						String dir = "lecFile/" + forum_sec + "/" + article_no + "/" + fileName;
+						System.out.println(dir);
 						ManageDir.make(forum_sec, article_no);
 						
 						
 						
 						//////////
 						int data = sInStream.readInt();
+						System.out.println("Data: " + data);
 						
 						File file = new File(dir);
 						out = new FileOutputStream(file);
 						
 						int dataLen = data;
 						System.out.print(dataLen + "kb will be transmitted: " + socket);
-						byte[] buffer = new byte[1024];
+						byte[] buffer = new byte[2];
 						int len;
 						int gauge;
+						int total = 0;
 						
 						for(;data > 0; data--){
 							
-							gauge = (int)((((double)dataLen - (double)data)  / (double)dataLen)*100);
-							if(gauge / 10 == 0)
-								System.out.println("Receiving data: " + gauge + "%");
+//							gauge = (int)((((double)dataLen - (double)data)  / (double)dataLen)*100);
+//							if(gauge / 10 == 0)
+//								System.out.println("Receiving data: " + gauge + "%");
 							
-							len = sIn.read(buffer);
-							out.write(buffer, 0, len); 
+							len = sInStream.read(buffer);
+							out.write(buffer, 0, len);
+							System.out.println(len);
+							total += len;
 							
-						}	
-					
+						}
+						
+						System.out.println(total);
+						
 						out.flush();
 						out.close();
 						
-						
-						
-						database.getResult(
-								"insert into filelist values "
+						String query = "insert into filelist values "
 								+ "(" + forum_sec + ", "
 								+ article_no + ", "
-								+ fileName + ", "
+								+ "'" + fileName + "', "
 								+ date + ", "
-								+ GetTime.dayAfter(7) + ");"
-						);
+								+ GetTime.dayAfter(7) + ");";
+						
+						System.out.println(query);
+						database.sendQuery(query);
 						
 						
 					}
@@ -151,23 +158,31 @@ public class ServerHandler extends Thread {
 				//////////////////////////////////
 				sOutStream.writeInt(1);
 				
+				for(String tmp: result){
+					System.out.println(tmp + " ----");
+				}
 				
 				int fileNum = result.length;
-				System.out.println(fileNum + " files Transmitted Client to Server");
+				System.out.println(fileNum + " files Transmitted Server to Client");
 				///////////
 				sOutStream.writeInt(fileNum);
 				
 				for(int i = 0; i < fileNum; i++){
 					
-					String[] query = result[i].split("*.*");
+					String[] query = result[i].split("/[*].[*]/");
+					
+					for(String tmp: query){
+						System.out.println(tmp + "/");
+					}
+					
 					String dir = "lecFile/" + query[0] + "/" + query[1] + "/" + query[2];
 					
 					////////
-					sOutStream.writeUTF(query[2]);
+					
 					
 					FileInputStream fin = new FileInputStream(new File(dir));
 					
-						byte[] buffer = new byte[1024];
+						byte[] buffer = new byte[2];
 						int len;
 						int data = 0;
 						
@@ -179,6 +194,9 @@ public class ServerHandler extends Thread {
 					fin.close();
 					
 					
+					sOutStream.writeUTF(query[2]);
+					
+					sOutStream.writeUTF(query[3]);
 					
 					
 					fin = new FileInputStream(new File(dir));
@@ -187,12 +205,12 @@ public class ServerHandler extends Thread {
 						sOutStream.writeInt(data);
 
 						len = 0;
-						int gauge;
+//						int gauge;
 						
 						for(; data > 0; data--){
-							gauge = (int)((((double)dataLen - (double)data)  / (double)dataLen)*100);
-							if(gauge / 10 == 0)
-								System.out.println("Receiving data: " + gauge + "%");
+//							gauge = (int)((((double)dataLen - (double)data)  / (double)dataLen)*100);
+//							if(gauge / 10 == 0)
+//								System.out.println("Receiving data: " + gauge + "%");
 							len = fin.read(buffer);
 							sOutStream.write(buffer, 0, len);
 						}
@@ -211,6 +229,9 @@ public class ServerHandler extends Thread {
 			socket.close();
 			
 			
+		}
+		catch(java.io.FileNotFoundException e){
+			System.out.println(e);
 		}
 		catch(IOException e){
 			System.out.println(e);
