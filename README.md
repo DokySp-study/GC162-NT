@@ -1,4 +1,4 @@
-<img src="https://github.com/DokySp/GC162NT-Project-GARAM/blob/master/wikiFiles/splash.gif" align="center">
+<img src="https://github.com/DokySp/GC162NT-Project-GARAM/blob/master/wikiFiles/splash.gif" width="300px">
 
 > 본 문서는 2016년 11월에 대학교 Term Project를<br>다시 정리 및 수정한 Repository입니다.
 
