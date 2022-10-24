@@ -6,10 +6,13 @@
  
 ## Overview
 - ![GitHub](https://img.shields.io/github/license/DokySp/GC162NT-Project-GARAM) ![GitHub top language](https://img.shields.io/github/languages/top/dokysp/GC162NT-Project-GARAM)
-- Project GARAM: 가천 E-Class 지원 프로그램
-- 목표
+- Project GARAM: 가천 E-Class 지원 프로그램 `Deprecated`
+- Objective
    - 가천대학교 E-class공간을 사용자의 컴퓨터와 동기화시킨다.
    - 가천대학교 공지사항의 내용을 빠르게 알려준다.
+- Team Member:
+   - **김도균** `기획`, `설계`, `개발`
+   - **이상아** `개발`, `UI 개발`
 
 # 참고
 > 2016년 11월에 대학교 Term Project를 다시 정리 및 수정한 Repository입니다.
